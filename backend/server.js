@@ -13,7 +13,7 @@ app.use(express.json());
 const corsOptions = {
   origin: [
     "http://localhost:5173", // local dev
-    "https://bikes-heaven-nlkw-frontend.vercel.app", // vercel
+    "https://bikesheavennfrontend.vercel.app/", // vercel
     process.env.FRONTEND_URL,
   ],
   credentials: true,
