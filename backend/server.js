@@ -8,7 +8,6 @@ const app = express();
 // connect to Mongo
 connectDB();
 
-// middlewares
 app.use(express.json());
 
 const corsOptions = {
