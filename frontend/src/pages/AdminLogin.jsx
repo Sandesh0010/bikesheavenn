@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
@@ -17,7 +18,7 @@ export default function AdminLogin() {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/admin-login`,
+        `${apiBaseUrl}/api/user/admin-login`,
         { email: username, password }
       );
 

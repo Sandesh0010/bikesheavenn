@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import bikeImg from "../assets/RoyalEnfield.jpg";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -47,7 +48,7 @@ export default function BikeItems({ filterType = "blog" }) {
           }
 
           const res = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/bikes/mybikes?type=${filterType}`,
+            `${apiBaseUrl}/api/bikes/mybikes?type=${filterType}`,
             {
               headers: {
                 authorization: "Bearer " + token,
@@ -90,7 +91,7 @@ export default function BikeItems({ filterType = "blog" }) {
 
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${bikeToDelete._id}`,
+        `${apiBaseUrl}/api/bikes/${bikeToDelete._id}`,
         {
           headers: {
             authorization: "Bearer " + sessionStorage.getItem("token"),

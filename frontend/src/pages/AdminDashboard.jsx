@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "../components/AdminNavbar";
 import Footer from "../components/Footer";
@@ -34,9 +35,9 @@ export default function AdminDashboard() {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const [usersRes, blogsRes, listingsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/all`, config),
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bikes`, config),
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/bikes/marketplace`, config),
+        axios.get(`${apiBaseUrl}/api/user/all`, config),
+        axios.get(`${apiBaseUrl}/api/bikes`, config),
+        axios.get(`${apiBaseUrl}/api/bikes/marketplace`, config),
       ]);
 
       setData({
@@ -63,9 +64,9 @@ export default function AdminDashboard() {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       let url = "";
       if (type === "users") {
-        url = `${import.meta.env.VITE_BACKEND_URL}/api/user/${id}`;
+        url = `${apiBaseUrl}/api/user/${id}`;
       } else {
-        url = `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${id}`;
+        url = `${apiBaseUrl}/api/bikes/${id}`;
       }
 
       await axios.delete(url, config);

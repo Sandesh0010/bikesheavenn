@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate } from "react-router-dom";
 
 export default function Form({
@@ -31,7 +32,7 @@ export default function Form({
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/${endpoint}`,
+        `${apiBaseUrl}/api/user/${endpoint}`,
         { email, password },
       );
 

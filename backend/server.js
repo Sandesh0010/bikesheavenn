@@ -19,8 +19,26 @@ connectDB();
 
 app.use(express.json());
 
+const rawFrontendUrl = process.env.FRONTEND_URL || "";
+const frontendUrl = rawFrontendUrl.replace(/\/+$/, "");
+const allowedOrigins = frontendUrl ? [frontendUrl] : [];
+
+if (process.env.NODE_ENV !== "production") {
+  allowedOrigins.push("http://localhost:5173");
+}
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
   optionsSuccessStatus: 200,
 };

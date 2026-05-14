@@ -1,6 +1,7 @@
 import React from "react";
 import { useLoaderData, useLocation } from "react-router-dom";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../components/AdminNavbar";
 import Footer from "../components/Footer";
@@ -8,9 +9,7 @@ import ScrollToTop from "../components/ScrollToTop";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const bikeDetails = async ({ params }) => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${params.id}`,
-  );
+  const res = await axios.get(`${apiBaseUrl}/api/bikes/${params.id}`);
   return res.data;
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
 import MarketplaceNotification from "../components/MarketplaceNotification";
@@ -66,16 +67,12 @@ export default function AddBikes() {
     }
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            authorization: "Bearer " + sessionStorage.getItem("token"),
-          },
+      await axios.post(`${apiBaseUrl}/api/bikes`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: "Bearer " + sessionStorage.getItem("token"),
         },
-      );
+      });
       setMarketplaceMessage("Blog listed successfully.");
       setShowMarketplaceNotif(true);
       setTimeout(() => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import { useNavigate, useParams } from "react-router-dom";
 import Toast from "../components/Toast";
 import MarketplaceNotification from "../components/MarketplaceNotification";
@@ -44,9 +45,7 @@ export default function EditBikes() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${id}`,
-        );
+        const response = await axios.get(`${apiBaseUrl}/api/bikes/${id}`);
 
         const res = response.data;
         setBikeData({
@@ -108,16 +107,12 @@ export default function EditBikes() {
     }
 
     try {
-      await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            authorization: "Bearer " + sessionStorage.getItem("token"),
-          },
+      await axios.put(`${apiBaseUrl}/api/bikes/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: "Bearer " + sessionStorage.getItem("token"),
         },
-      );
+      });
 
       setMarketplaceMessage("Bike edited successfully");
       setShowMarketplaceNotif(true);

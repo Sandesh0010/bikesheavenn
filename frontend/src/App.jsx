@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import MainNavigation from "./components/MainNavigation";
 import axios from "axios";
+import { apiBaseUrl } from "./config/api";
 import AddBikes from "./pages/AddBikes";
 import EditBikes from "./pages/EditBikes";
 import EditMarketplaceBike from "./pages/EditMarketplaceBike";
@@ -16,7 +17,7 @@ import AdminRoute from "./components/AdminRoute";
 const getAllBikes = async () => {
   let allBikes = [];
   await axios
-    .get(`${import.meta.env.VITE_BACKEND_URL}/api/bikes`)
+    .get(`${apiBaseUrl}/api/bikes`)
     .then((res) => {
       allBikes = res.data;
     });
@@ -30,14 +31,11 @@ const getMyBikes = async () => {
       return [];
     }
 
-    const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/bikes/mybikes`,
-      {
-        headers: {
-          authorization: "Bearer " + token,
-        },
+    const response = await axios.get(`${apiBaseUrl}/api/bikes/mybikes`, {
+      headers: {
+        authorization: "Bearer " + token,
       },
-    );
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching user's bikes:", error);

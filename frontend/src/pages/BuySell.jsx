@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiBaseUrl } from "../config/api";
 import bikeImg from "../assets/RoyalEnfield.jpg";
 import Modal from "../components/Modal";
 import Form from "../components/Form";
@@ -77,7 +78,7 @@ export default function BuySell() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes/marketplace`,
+        `${apiBaseUrl}/api/bikes/marketplace`,
       );
       setBikesForSale(response.data);
     } catch (error) {
@@ -149,16 +150,12 @@ export default function BuySell() {
     formData.append("forSale", true);
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            authorization: "Bearer " + token,
-          },
+      await axios.post(`${apiBaseUrl}/api/bikes`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: "Bearer " + token,
         },
-      );
+      });
 
       showMarketplaceNotification("Bike sale listed successfully", "success");
       setActiveTab("browse"); // Switch to browse tab to see the listing
@@ -188,14 +185,11 @@ export default function BuySell() {
 
     setLoading(true);
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/bikes/${bikeToDelete._id}`,
-        {
-          headers: {
-            authorization: "Bearer " + token,
-          },
+      await axios.delete(`${apiBaseUrl}/api/bikes/${bikeToDelete._id}`, {
+        headers: {
+          authorization: "Bearer " + token,
         },
-      );
+      });
 
       showMarketplaceNotification(bikeToDelete.forSale ? "Bike sale deleted successfully" : "Blog deleted successfully", "delete");
       setShowDeleteConfirm(false);
