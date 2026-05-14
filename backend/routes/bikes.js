@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getBikes,
   getMyBikes,
+  getMarketplaceBikes,
   getBike,
   addBike,
   editBike,
@@ -13,14 +14,16 @@ const router = express.Router();
 
 router.get("/", getBikes); // Get all bikes
 
+router.get("/marketplace", getMarketplaceBikes); // Get bikes for sale
+
 router.get("/mybikes", verifyToken, getMyBikes); // Get user's bikes
 
 router.get("/:id", getBike); // Get bike by ID
 
 router.post("/", verifyToken, upload.single("file"), addBike); // Add a new bike
 
-router.put("/:id", upload.single("file"), editBike); // Edit bike
+router.put("/:id", verifyToken, upload.single("file"), editBike); // Edit bike
 
-router.delete("/:id", deleteBike); // Delete bike
+router.delete("/:id", verifyToken, deleteBike); // Delete bike
 
 module.exports = router;

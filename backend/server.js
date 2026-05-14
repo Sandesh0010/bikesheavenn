@@ -1,5 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const crypto = require("crypto");
+
+// Use a random secret on every restart in development to clear sessions
+if (process.env.NODE_ENV !== "production" || !process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = crypto.randomBytes(64).toString("hex");
+  console.log(
+    "Volatile JWT_SECRET generated for this session. All users will be logged out on server restart.",
+  );
+}
 const connectDB = require("./config/db.js");
 const cors = require("cors");
 

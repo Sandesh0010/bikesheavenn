@@ -5,8 +5,13 @@ import MainNavigation from "./components/MainNavigation";
 import axios from "axios";
 import AddBikes from "./pages/AddBikes";
 import EditBikes from "./pages/EditBikes";
+import EditMarketplaceBike from "./pages/EditMarketplaceBike";
 import BikeDetails, { bikeDetails } from "./pages/BikeDetails";
 import MyBikes from "./pages/MyBikes";
+import BuySell from "./pages/BuySell";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
+import AdminRoute from "./components/AdminRoute";
 
 const getAllBikes = async () => {
   let allBikes = [];
@@ -20,7 +25,7 @@ const getAllBikes = async () => {
 
 const getMyBikes = async () => {
   try {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       return [];
     }
@@ -31,7 +36,7 @@ const getMyBikes = async () => {
         headers: {
           authorization: "Bearer " + token,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
@@ -47,10 +52,53 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home />, loader: getAllBikes },
       { path: "/mybikes", element: <MyBikes />, loader: getMyBikes },
+      { path: "/buysell", element: <BuySell /> },
       { path: "/addbikes", element: <AddBikes /> },
       { path: "/editbikes/:id", element: <EditBikes /> },
-      { path: "/bikes/:id", element: <BikeDetails />, loader: bikeDetails },
+      { path: "/editmarketplace/:id", element: <EditMarketplaceBike /> },
+      {
+        path: "/bikes/:id",
+        element: <BikeDetails />,
+        loader: bikeDetails,
+      },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLogin />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <AdminRoute>
+        <AdminDashboard />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "/admin/bikes/:id",
+    element: (
+      <AdminRoute>
+        <BikeDetails />
+      </AdminRoute>
+    ),
+    loader: bikeDetails,
+  },
+  {
+    path: "/admin/editbikes/:id",
+    element: (
+      <AdminRoute>
+        <EditBikes />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "/admin/editmarketplace/:id",
+    element: (
+      <AdminRoute>
+        <EditMarketplaceBike />
+      </AdminRoute>
+    ),
   },
 ]);
 
