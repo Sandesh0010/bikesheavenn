@@ -20,11 +20,7 @@ connectDB();
 app.use(express.json());
 
 const corsOptions = {
-  origin: [
-    "http://localhost:5173", // local dev
-    "https://bikesheavennfrontend.vercel.app/", // vercel
-    process.env.FRONTEND_URL,
-  ],
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   optionsSuccessStatus: 200,
 };
